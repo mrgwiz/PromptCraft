@@ -36,34 +36,62 @@ export default function Sidebar() {
       section: "Learn",
       items: [
         { name: "Home", path: "/", icon: <Home className="h-4 w-4 mr-2" /> },
-        { name: "Getting Started", path: "/", icon: <BookOpen className="h-4 w-4 mr-2" /> },
-        { name: "Fundamentals", path: "/fundamentals", icon: <BookOpenCheck className="h-4 w-4 mr-2" /> },
-        { name: "Best Practices", path: "/best-practices", icon: <CheckCircle className="h-4 w-4 mr-2" /> },
-        { name: "Advanced Techniques", path: "/advanced-techniques", icon: <LightbulbIcon className="h-4 w-4 mr-2" /> },
+        {
+          name: "Getting Started",
+          path: "/",
+          icon: <BookOpen className="h-4 w-4 mr-2" />,
+        },
+        {
+          name: "Fundamentals",
+          path: "/fundamentals",
+          icon: <BookOpenCheck className="h-4 w-4 mr-2" />,
+        },
+        {
+          name: "Best Practices",
+          path: "/best-practices",
+          icon: <CheckCircle className="h-4 w-4 mr-2" />,
+        },
+        {
+          name: "Advanced Techniques",
+          path: "/advanced-techniques",
+          icon: <LightbulbIcon className="h-4 w-4 mr-2" />,
+        },
       ],
     },
     {
       section: "Practice",
       items: [
-        { name: "Playground", path: "/playground", icon: <PlayCircle className="h-4 w-4 mr-2" /> },
-        { name: "Templates", path: "/templates", icon: <LayoutList className="h-4 w-4 mr-2" /> },
-        { name: "Analysis", path: "#analysis", icon: <BarChart2 className="h-4 w-4 mr-2" /> },
+        {
+          name: "Playground",
+          path: "/playground",
+          icon: <PlayCircle className="h-4 w-4 mr-2" />,
+        },
+        {
+          name: "Templates",
+          path: "/templates",
+          icon: <LayoutList className="h-4 w-4 mr-2" />,
+        },
+        {
+          name: "Analysis",
+          path: "#analysis",
+          icon: <BarChart2 className="h-4 w-4 mr-2" />,
+        },
       ],
     },
     {
       section: "Resources",
       items: [
-        { 
-          name: "Ollama Docs", 
-          path: "https://ollama.ai/docs", 
+        {
+          name: "Ollama Docs",
+          path: "https://ollama.ai/docs",
           icon: <FileText className="h-4 w-4 mr-2" />,
-          external: true
+          external: true,
         },
-        { 
-          name: "Community", 
-          path: "https://github.com/ollama/ollama", 
+        {
+          name: "Community",
+          path: "https://github.com/ollama/ollama",
           icon: <Code className="h-4 w-4 mr-2" />,
-          external: true
+          external: true,
         },
       ],
     },
@@ -74,21 +102,23 @@ export default function Sidebar() {
   return (
     <>
       {/* Mobile menu button */}
-      <Button 
-        variant="ghost" 
-        size="icon" 
-        className="lg:hidden fixed top-4 left-4 z-50 bg-background"
+      <Button
+        variant="ghost"
+        size="icon"
+        className={`lg:hidden fixed top-4 ${isOpen ? "right" : "left"}-4 z-50 bg-background`}
         onClick={toggleSidebar}
       >
-        {isOpen ? <X /> : <Menu />}
+        {isOpen ? <X className="text-white text-lg" /> : <Menu />}
       </Button>
 
       {/* Sidebar */}
-      <nav className={cn(
-        "w-full lg:w-64 bg-primary text-white flex-shrink-0 overflow-y-auto lg:h-screen z-40",
-        "fixed lg:static top-0 left-0 h-screen transition-transform duration-300 ease-in-out",
-        isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
-      )}>
+      <nav
+        className={cn(
+          "w-full lg:w-64 bg-gray-800 text-white flex-shrink-0 overflow-y-auto lg:h-screen z-40",
+          "fixed lg:static top-0 left-0 h-screen transition-transform duration-300 ease-in-out",
+          isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0",
+        )}
+      >
         <div className="p-4 border-b border-gray-700">
           <h1 className="text-xl font-bold">PromptCraft</h1>
           <p className="text-sm text-gray-400">Master LLM Prompting</p>
@@ -96,10 +126,12 @@ export default function Sidebar() {
 
         {navItems.map((section) => (
           <div key={section.section} className="py-2">
-            <p className="px-4 py-2 text-sm text-gray-400 uppercase font-medium">{section.section}</p>
-            {section.items.map((item) => (
+            <p className="px-4 py-2 text-sm text-gray-400 uppercase font-medium">
+              {section.section}
+            </p>
+            {section.items.map((item) =>
               item.external ? (
-                <a 
+                <a
                   key={item.name}
                   href={item.path}
                   target="_blank"
@@ -112,10 +144,9 @@ export default function Sidebar() {
                 </a>
               ) : (
                 <Link key={item.name} href={item.path}>
-                  <a 
+                  <a
                     className={cn(
                       "flex items-center px-4 py-2 hover:bg-gray-800 text-white",
-                      location === item.path && "bg-gray-700"
                     )}
                     onClick={() => setIsOpen(false)}
                   >
@@ -123,16 +154,22 @@ export default function Sidebar() {
                     {item.name}
                   </a>
                 </Link>
-              )
-            ))}
+              ),
+            )}
           </div>
         ))}
 
         <div className="mt-auto p-4 border-t border-gray-700">
           <div className="flex items-center">
-            <div className={`w-2 h-2 ${isConnected ? 'bg-green-500' : 'bg-red-500'} rounded-full mr-2`}></div>
+            <div
+              className={`w-2 h-2 ${isConnected ? "bg-green-500" : "bg-red-500"} rounded-full mr-2`}
+            ></div>
             <span className="text-sm">
-              {isLoading ? "Checking Ollama..." : (isConnected ? "Ollama: Connected" : "Ollama: Disconnected")}
+              {isLoading
+                ? "Checking Ollama..."
+                : isConnected
+                  ? "Ollama: Connected"
+                  : "Ollama: Disconnected"}
             </span>
           </div>
         </div>
@@ -140,8 +177,8 @@ export default function Sidebar() {
 
       {/* Overlay for mobile */}
       {isOpen && (
-        <div 
-          className="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden"
+        <div
+          className="fixed inset-0 bg-gray-700 z-30 lg:hidden"
           onClick={() => setIsOpen(false)}
         />
       )}
