@@ -148,7 +148,7 @@ Now extract from this text:
                     </div>
 
                     <Button 
-                      className="bg-secondary hover:bg-secondary/90 text-white"
+                      className="bg-secondary hover:bg-secondary/90 text-gray-900"
                       onClick={() => generateCompletion()}
                       disabled={isPending || !prompt.trim()}
                     >
